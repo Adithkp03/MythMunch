@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Truth Verification System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="container">
+        <h1 class="app-title">Truth Verification System</h1>
+        <p class="app-tagline">Advanced AI-powered fact-checking for reliable information</p>
+      </div>
+      <button id="themeToggle" class="btn btn--outline btn--sm">🌙 Dark Mode</button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        
+        <!-- Input Section -->
+        <section class="input-section">
+          <div class="claim-input-container">
+            <label for="claim-input" class="form-label">Enter Claim to Verify</label>
+            <textarea 
+              id="claim-input" 
+              class="form-control claim-textarea" 
+              placeholder="Enter the claim you want to fact-check..."
+              rows="4"
+            ></textarea>
+            <div class="input-error hidden" id="input-error">
+              Please enter a claim to fact-check.
+            </div>
+          </div>
+
+          <!-- Settings Panel -->
+          <div class="settings-panel card">
+            <div class="settings-header">
+              <h3>Verification Settings</h3>
+              <button class="settings-toggle" id="settings-toggle" aria-label="Toggle settings">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 12L3 7L13 7L8 12Z" fill="currentColor"/>
+                </svg>
+              </button>
+            </div>
+            <div class="settings-content" id="settings-content">
+              <div class="setting-item">
+                <label for="max-sources" class="setting-label">
+                  Max Evidence Sources: <span id="sources-value">8</span>
+                </label>
+                <input 
+                  type="range" 
+                  id="max-sources" 
+                  class="range-slider"
+                  min="1" 
+                  max="12" 
+                  value="8"
+                >
+              </div>
+              
+              <div class="setting-item">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="include-evidence" checked>
+                  <span class="checkbox-custom"></span>
+                  Include Evidence Sources
+                </label>
+              </div>
+
+              <div class="setting-item">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="advanced-analysis">
+                  <span class="checkbox-custom"></span>
+                  Advanced Analysis Mode
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verify Button -->
+          <button class="btn btn--primary btn--lg verify-btn" id="verify-btn">
+            <span class="btn-text">Verify Claim</span>
+            <div class="btn-spinner hidden">
+              <div class="spinner"></div>
+            </div>
+          </button>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section hidden" id="results-section">
+          <div class="results-header">
+            <h2>Verification Results</h2>
+            <div class="processing-time" id="processing-time"></div>
+          </div>
+
+          <div class="results-grid">
+            <!-- Verdict Card -->
+            <div class="card verdict-card">
+              <div class="card__body">
+                <div class="verdict-badge" id="verdict-badge"></div>
+                <div class="confidence-section">
+                  <label class="confidence-label">Confidence Level</label>
+                  <div class="confidence-bar">
+                    <div class="confidence-fill" id="confidence-fill"></div>
+                    <span class="confidence-text" id="confidence-text"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Explanation Card -->
+            <div class="card explanation-card">
+              <div class="card__body">
+                <h3>Analysis Explanation</h3>
+                <p id="explanation-text"></p>
+                <div class="gemini-comparison" id="gemini-comparison"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Evidence Section -->
+        <section class="evidence-section hidden" id="evidence-section">
+          <div class="evidence-header">
+            <h2>Supporting Evidence</h2>
+            <div class="evidence-count" id="evidence-count"></div>
+          </div>
+          <div class="evidence-grid" id="evidence-grid">
+            <!-- Evidence cards will be populated here -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- <footer class="app-footer">
+      <div class="container">
+        <div class="footer-stats" id="footer-stats">
+          <span>Truth Verification System</span>
+          <span>Powered by Advanced AI</span>
+        </div>
+      </div>
+    </footer> --> 
+
+  </div>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay hidden" id="loading-overlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h3>Analyzing Claim...</h3>
+      <p>Gathering evidence and cross-referencing sources</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
