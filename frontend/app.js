@@ -39,15 +39,15 @@ class TruthVerificationApp {
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme) {
       root.setAttribute("data-color-scheme", savedTheme);
-      toggleBtn.textContent = savedTheme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+      toggleBtn.textContent = savedTheme === "dark" ? "" : "";
     } else {
       // Default to system preference
       if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
         root.setAttribute("data-color-scheme", "dark");
-        toggleBtn.textContent = "☀️ Light Mode";
+        toggleBtn.textContent = "";
       } else {
         root.setAttribute("data-color-scheme", "light");
-        toggleBtn.textContent = "🌙 Dark Mode";
+        toggleBtn.textContent = "";
       }
     }
 
@@ -57,7 +57,7 @@ class TruthVerificationApp {
       const newTheme = current === "dark" ? "light" : "dark";
       root.setAttribute("data-color-scheme", newTheme);
       localStorage.setItem("theme", newTheme);
-      toggleBtn.textContent = newTheme === "dark" ? "☀️ Light Mode" : "🌙 Dark Mode";
+      toggleBtn.textContent = newTheme === "dark" ? "" : "";
     });
   }
   bindEvents() {
@@ -409,7 +409,242 @@ class TruthVerificationApp {
     });
   }
 }
+class CrisisDashboard extends TruthVerificationApp {
+    constructor() {
+        super();
+        this.dashboardMode = false;
+        this.monitoringActive = false;
+        this.alertsPolling = null;
+        this.trendsPolling = null;
+    }
+    
+    init() {
+        super.init();
+        this.initDashboard();
+        this.bindDashboardEvents();
+    }
+    
+    initDashboard() {
+        // Add dashboard toggle
+        const header = document.querySelector('.app-header .container');
+        const dashboardToggle = document.createElement('button');
+        dashboardToggle.id = 'dashboard-toggle';
+        dashboardToggle.className = 'btn btn--secondary';
+        dashboardToggle.textContent = '📊 Crisis Dashboard';
+        header.appendChild(dashboardToggle);
+        
+        // Create dashboard container
+        const dashboardHTML = `
+            <div id="crisis-dashboard" class="dashboard-container hidden">
+                <div class="dashboard-header">
+                    <h2>🚨 Crisis Misinformation Monitoring</h2>
+                    <div class="dashboard-controls">
+                        <button id="start-monitoring" class="btn btn--primary">Start Monitoring</button>
+                        <button id="stop-monitoring" class="btn btn--secondary">Stop Monitoring</button>
+                        <select id="crisis-selector" class="form-control">
+                            <option value="all">All Crises</option>
+                            <option value="ukraine_war">Ukraine Conflict</option>
+                            <option value="covid_pandemic">COVID-19</option>
+                            <option value="climate_crisis">Climate Change</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card alerts-card">
+                        <h3>🚨 Active Alerts</h3>
+                        <div id="alerts-container"></div>
+                    </div>
+                    
+                    <div class="dashboard-card trends-card">
+                        <h3>📈 Trending Topics</h3>
+                        <div id="trends-container"></div>
+                    </div>
+                    
+                    <div class="dashboard-card monitoring-card">
+                        <h3>👁️ Live Monitoring</h3>
+                        <div id="monitoring-status">Not monitoring</div>
+                        <div id="monitoring-stats"></div>
+                    </div>
+                    
+                    <div class="dashboard-card analysis-card">
+                        <h3>🔍 Trend Analysis</h3>
+                        <div id="analysis-container"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        const mainContent = document.querySelector('.main-content');
+        mainContent.insertAdjacentHTML('afterbegin', dashboardHTML);
+    }
+    
+    bindDashboardEvents() {
+        const dashboardToggle = document.getElementById('dashboard-toggle');
+        const dashboard = document.getElementById('crisis-dashboard');
+        const inputSection = document.querySelector('.input-section');
+        
+        dashboardToggle.addEventListener('click', () => {
+            this.dashboardMode = !this.dashboardMode;
+            
+            if (this.dashboardMode) {
+                dashboard.classList.remove('hidden');
+                inputSection.classList.add('hidden');
+                dashboardToggle.textContent = '📝 Fact Checker';
+                this.startDashboardPolling();
+            } else {
+                dashboard.classList.add('hidden');
+                inputSection.classList.remove('hidden');
+                dashboardToggle.textContent = '📊 Crisis Dashboard';
+                this.stopDashboardPolling();
+            }
+        });
+        
+        // Start/Stop monitoring
+        document.getElementById('start-monitoring').addEventListener('click', () => {
+            this.startMonitoring();
+        });
+        
+        document.getElementById('stop-monitoring').addEventListener('click', () => {
+            this.stopMonitoring();
+        });
+    }
+    
+    async startMonitoring() {
+        const keywords = ['ukraine', 'covid', 'vaccine', 'climate change', 'election fraud'];
+        
+        try {
+            const response = await fetch(`${this.apiConfig.baseUrl}/start-monitoring`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(keywords)
+            });
+            
+            if (response.ok) {
+                this.monitoringActive = true;
+                document.getElementById('monitoring-status').textContent = '🟢 Monitoring Active';
+                document.getElementById('start-monitoring').disabled = true;
+                document.getElementById('stop-monitoring').disabled = false;
+            }
+        } catch (error) {
+            console.error('Failed to start monitoring:', error);
+        }
+    }
+    
+    stopMonitoring() {
+        this.monitoringActive = false;
+        document.getElementById('monitoring-status').textContent = '🔴 Monitoring Stopped';
+        document.getElementById('start-monitoring').disabled = false;
+        document.getElementById('stop-monitoring').disabled = true;
+    }
+    
+    startDashboardPolling() {
+        // Poll alerts every 10 seconds
+        this.alertsPolling = setInterval(() => {
+            this.updateAlerts();
+        }, 10000);
+        
+        // Poll trends every 30 seconds
+        this.trendsPolling = setInterval(() => {
+            this.updateTrends();
+        }, 30000);
+        
+        // Initial load
+        this.updateAlerts();
+        this.updateTrends();
+    }
+    
+    stopDashboardPolling() {
+        if (this.alertsPolling) {
+            clearInterval(this.alertsPolling);
+        }
+        if (this.trendsPolling) {
+            clearInterval(this.trendsPolling);
+        }
+    }
+    
+    async updateAlerts() {
+        try {
+            const response = await fetch(`${this.apiConfig.baseUrl}/alerts`);
+            const data = await response.json();
+            
+            const container = document.getElementById('alerts-container');
+            container.innerHTML = '';
+            
+            if (data.alerts && data.alerts.length > 0) {
+                data.alerts.forEach(alert => {
+                    const alertElement = this.createAlertElement(alert);
+                    container.appendChild(alertElement);
+                });
+            } else {
+                container.innerHTML = '<p class="no-alerts">No active alerts</p>';
+            }
+        } catch (error) {
+            console.error('Failed to update alerts:', error);
+        }
+    }
+    
+    async updateTrends() {
+        try {
+            const response = await fetch(`${this.apiConfig.baseUrl}/trends`);
+            const data = await response.json();
+            
+            const container = document.getElementById('trends-container');
+            container.innerHTML = '';
+            
+            if (data.trending_keywords && data.trending_keywords.length > 0) {
+                data.trending_keywords.forEach(([keyword, count]) => {
+                    const trendElement = this.createTrendElement(keyword, count);
+                    container.appendChild(trendElement);
+                });
+            } else {
+                container.innerHTML = '<p class="no-trends">No trending topics</p>';
+            }
+        } catch (error) {
+            console.error('Failed to update trends:', error);
+        }
+    }
+    
+    createAlertElement(alert) {
+        const div = document.createElement('div');
+        div.className = 'alert-item high-risk';
+        div.innerHTML = `
+            <div class="alert-header">
+                <span class="alert-keyword">${alert.keyword}</span>
+                <span class="alert-time">${new Date(alert.timestamp).toLocaleTimeString()}</span>
+            </div>
+            <div class="alert-content">${alert.mention.content.substring(0, 100)}...</div>
+            <div class="alert-actions">
+                <button class="btn btn--sm" onclick="app.investigateAlert('${alert.alert_id}')">
+                    🔍 Investigate
+                </button>
+            </div>
+        `;
+        return div;
+    }
+    
+    createTrendElement(keyword, count) {
+        const div = document.createElement('div');
+        div.className = 'trend-item';
+        div.innerHTML = `
+            <div class="trend-keyword">${keyword}</div>
+            <div class="trend-count">${count} mentions</div>
+            <div class="trend-bar">
+                <div class="trend-fill" style="width: ${Math.min(count / 10 * 100, 100)}%"></div>
+            </div>
+        `;
+        return div;
+    }
+    
+    async investigateAlert(alertId) {
+        // This would open a detailed investigation view
+        console.log('Investigating alert:', alertId);
+        // You can implement a modal or new page for detailed analysis
+    }
+}
 
+// Replace the original app with the enhanced version
+const app = new CrisisDashboard();
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new TruthVerificationApp();

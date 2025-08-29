@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 
 # Virtual environment folders
-venv/
+myenv/
 .env
 
 # Distribution / Packaging
