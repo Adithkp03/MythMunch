@@ -286,19 +286,19 @@ class SocialMediaMonitor:
         
         # Rate limiting check
         now = time.time()
-        if now - self.last_twitter_call < 5:  # 5 seconds minimum between calls
+        if now - self.last_twitter_call < 15:  # 5 seconds minimum between calls
             logger.info("Twitter rate limit: waiting...")
-            await asyncio.sleep(5)
+            await asyncio.sleep(15)
         
         try:
             self.last_twitter_call = time.time()
-            await asyncio.sleep(3)  # Additional safety delay
+            await asyncio.sleep(10)  # Additional safety delay
             
             def _search():
                 try:
                     return self.twitter_client.search_recent_tweets(
                         query=query,
-                        max_results=min(max_results, 10),  # Reduced to 10
+                        max_results=max(min(max_results, 100), 10),  # Reduced to 10
                         tweet_fields=['created_at', 'public_metrics', 'author_id']
                     )
                 except Exception as e:
@@ -379,9 +379,13 @@ class SocialMediaMonitor:
             return []
 
     async def close(self):
-        """Close async connections"""
+        """Close async connections safely"""
         if self.reddit_api:
-            await self.reddit_api.close()
+            try:
+                await self.reddit_api.close()
+            except (asyncio.CancelledError, Exception) as e:
+                logger.info(f"Reddit API close handled: {type(e).__name__}")
+
 
 # --- STREAM PROCESSOR CLASS ---
 class MisinformationStreamProcessor:
@@ -442,12 +446,12 @@ class MisinformationStreamProcessor:
                     try:
                         # Stagger requests - 30 seconds between keywords
                         if i > 0:
-                            await asyncio.sleep(30)
+                            await asyncio.sleep(60)
                         
                         logger.info(f"Checking keyword: {keyword}")
                         
-                        twitter_mentions = await social_monitor.search_twitter(keyword, 5)
-                        reddit_mentions = await social_monitor.search_reddit(keyword, 3)
+                        twitter_mentions = await social_monitor.search_twitter(keyword, 10)
+                        reddit_mentions = await social_monitor.search_reddit(keyword, 5)
                         
                         all_mentions = twitter_mentions + reddit_mentions
                         logger.info(f"Keyword '{keyword}': {len(all_mentions)} mentions found")
@@ -1757,9 +1761,12 @@ async def get_config():
 # Cleanup on shutdown
 @app.on_event("shutdown")
 async def shutdown_event():
-    await stream_processor.stop_monitoring()
-    await fact_checker.social_monitor.close()
-    logger.info("System shutdown complete")
+    try:
+        await stream_processor.stop_monitoring()
+        await fact_checker.social_monitor.close()
+        logger.info("System shutdown complete")
+    except Exception as e:
+        logger.info(f"Shutdown cleanup handled: {type(e).__name__}")
 
 if __name__ == "__main__":
     import uvicorn
