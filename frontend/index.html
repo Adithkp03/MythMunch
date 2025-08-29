@@ -1,161 +1,618 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-color-scheme="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Truth Verification System</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 Crisis Misinformation Detection System | AI-Powered Truth Verification</title>
+    <meta name="description" content="Advanced AI-powered crisis misinformation detection with real-time monitoring and multi-source evidence analysis">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
 </head>
 <body>
-  <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="container">
-        <h1 class="app-title">Truth Verification System</h1>
-        <p class="app-tagline">Advanced AI-powered fact-checking for reliable information</p>
-      </div>
-      <button id="themeToggle" class="btn btn--outline btn--sm"></button>
-    </header>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <div class="container">
-        
-        <!-- Input Section -->
-        <section class="input-section">
-          <div class="claim-input-container">
-            <label for="claim-input" class="form-label">Enter Claim to Verify</label>
-            <textarea 
-              id="claim-input" 
-              class="form-control claim-textarea" 
-              placeholder="Enter the claim you want to fact-check..."
-              rows="4"
-            ></textarea>
-            <div class="input-error hidden" id="input-error">
-              Please enter a claim to fact-check.
-            </div>
-          </div>
-
-          <!-- Settings Panel -->
-          <div class="settings-panel card">
-            <div class="settings-header">
-              <h3>Verification Settings</h3>
-              <button class="settings-toggle" id="settings-toggle" aria-label="Toggle settings">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M8 12L3 7L13 7L8 12Z" fill="currentColor"/>
-                </svg>
-              </button>
-            </div>
-            <div class="settings-content" id="settings-content">
-              <div class="setting-item">
-                <label for="max-sources" class="setting-label">
-                  Max Evidence Sources: <span id="sources-value">8</span>
-                </label>
-                <input 
-                  type="range" 
-                  id="max-sources" 
-                  class="range-slider"
-                  min="1" 
-                  max="12" 
-                  value="8"
-                >
-              </div>
-              
-              <div class="setting-item">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="include-evidence" checked>
-                  <span class="checkbox-custom"></span>
-                  Include Evidence Sources
-                </label>
-              </div>
-
-              <div class="setting-item">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="advanced-analysis">
-                  <span class="checkbox-custom"></span>
-                  Advanced Analysis Mode
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Verify Button -->
-          <button class="btn btn--primary btn--lg verify-btn" id="verify-btn">
-            <span class="btn-text">Verify Claim</span>
-            <div class="btn-spinner hidden">
-              <div class="spinner"></div>
-            </div>
-          </button>
-        </section>
-
-        <!-- Results Section -->
-        <section class="results-section hidden" id="results-section">
-          <div class="results-header">
-            <h2>Verification Results</h2>
-            <div class="processing-time" id="processing-time"></div>
-          </div>
-
-          <div class="results-grid">
-            <!-- Verdict Card -->
-            <div class="card verdict-card">
-              <div class="card__body">
-                <div class="verdict-badge" id="verdict-badge"></div>
-                <div class="confidence-section">
-                  <label class="confidence-label">Confidence Level</label>
-                  <div class="confidence-bar">
-                    <div class="confidence-fill" id="confidence-fill"></div>
-                    <span class="confidence-text" id="confidence-text"></span>
-                  </div>
+    <div class="app-container">
+        <!-- Navigation Header -->
+        <header class="nav-header">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <span class="logo-icon">🚨</span>
+                    <span class="logo-text">CrisisGuard AI</span>
+                    <span class="beta-badge">BETA</span>
                 </div>
-              </div>
+                
+                <nav class="nav-tabs">
+                    <button class="nav-tab active" data-tab="fact-check">
+                        <span class="tab-icon">🔍</span>
+                        Fact Check
+                    </button>
+                    <button class="nav-tab" data-tab="dashboard">
+                        <span class="tab-icon">📊</span>
+                        Live Dashboard
+                    </button>
+                    <button class="nav-tab" data-tab="analytics">
+                        <span class="tab-icon">📈</span>
+                        Analytics
+                    </button>
+                    <button class="nav-tab" data-tab="settings">
+                        <span class="tab-icon">⚙️</span>
+                        Settings
+                    </button>
+                </nav>
+                
+                <div class="nav-controls">
+                    <div class="connection-status">
+                        <div class="status-dot" id="connection-status"></div>
+                        <span class="status-text" id="connection-text">Connected</span>
+                    </div>
+                    <button id="themeToggle" class="theme-toggle" title="Toggle theme">🌙</button>
+                    <button class="emergency-btn" id="emergency-alert">
+                        <span class="emergency-icon">🚨</span>
+                        Emergency
+                    </button>
+                </div>
             </div>
+        </header>
 
-            <!-- Explanation Card -->
-            <div class="card explanation-card">
-              <div class="card__body">
-                <h3>Analysis Explanation</h3>
-                <p id="explanation-text"></p>
-                <div class="gemini-comparison" id="gemini-comparison"></div>
-              </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Fact Check Tab -->
+            <section class="tab-content active" id="fact-check-tab">
+                <div class="container">
+                    <div class="hero-section">
+                        <h1 class="hero-title">
+                            <span class="gradient-text">AI-Powered Truth Verification</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Advanced crisis misinformation detection with real-time monitoring and multi-source evidence analysis
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="total-checks">45,782</span>
+                                <span class="stat-label">Claims Verified</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="accuracy-rate">94.7%</span>
+                                <span class="stat-label">Accuracy Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="detection-time">1.3s</span>
+                                <span class="stat-label">Avg Detection</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-actions">
+                        <button class="quick-action-btn" data-example="covid-vaccine">
+                            <span class="action-icon">💉</span>
+                            <span class="action-text">COVID Vaccine Claims</span>
+                        </button>
+                        <button class="quick-action-btn" data-example="ukraine-war">
+                            <span class="action-icon">🇺🇦</span>
+                            <span class="action-text">Ukraine Conflict</span>
+                        </button>
+                        <button class="quick-action-btn" data-example="climate-change">
+                            <span class="action-icon">🌍</span>
+                            <span class="action-text">Climate Change</span>
+                        </button>
+                        <button class="quick-action-btn" data-example="election-fraud">
+                            <span class="action-icon">🗳️</span>
+                            <span class="action-text">Election Fraud</span>
+                        </button>
+                    </div>
+
+                    <!-- Fact Check Form -->
+                    <div class="fact-check-form">
+                        <div class="form-header">
+                            <h2>Enter Claim to Verify</h2>
+                            <div class="form-actions">
+                                <button class="btn btn--outline" id="voice-input-btn">
+                                    <span class="btn-icon">🎤</span>
+                                    Voice Input
+                                </button>
+                                <button class="btn btn--outline" id="paste-btn">
+                                    <span class="btn-icon">📋</span>
+                                    Paste
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="input-container">
+                            <textarea 
+                                id="claim-input" 
+                                class="claim-textarea form-control" 
+                                placeholder="Enter the claim you want to fact-check here..."
+                                rows="4"
+                                maxlength="2000"
+                            ></textarea>
+                            <div class="input-footer">
+                                <div class="char-counter">
+                                    <span id="char-count">0</span>/2000
+                                </div>
+                                <div class="input-actions">
+                                    <button class="action-btn" id="clear-btn">Clear</button>
+                                    <button class="action-btn" id="analyze-sentiment">
+                                        <span class="sentiment-icon">😐</span>
+                                        Analyze Tone
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="input-error hidden" id="input-error">
+                                Please enter a claim to verify
+                            </div>
+                        </div>
+
+                        <!-- Advanced Settings -->
+                        <div class="settings-panel card">
+                            <div class="settings-header" id="settings-toggle">
+                                <h3>🔧 Advanced Settings</h3>
+                                <span class="settings-arrow">▼</span>
+                            </div>
+                            <div class="settings-content expanded" id="settings-content">
+                                <div class="settings-grid">
+                                    <div class="setting-group">
+                                        <label class="form-label">Evidence Sources: <span id="sources-value">12</span></label>
+                                        <input 
+                                            type="range" 
+                                            id="max-sources" 
+                                            class="range-slider" 
+                                            min="3" 
+                                            max="20" 
+                                            value="12"
+                                        >
+                                    </div>
+                                    
+                                    <div class="setting-group">
+                                        <label class="form-label">Analysis Mode</label>
+                                        <select id="analysis-mode" class="form-control">
+                                            <option value="standard">Standard Analysis</option>
+                                            <option value="crisis-aware">Crisis-Aware Analysis</option>
+                                            <option value="deep">Deep Learning Analysis</option>
+                                            <option value="ensemble">Ensemble Method</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="include-evidence" checked>
+                                        <div class="checkbox-custom"></div>
+                                        Include Evidence Sources
+                                    </label>
+                                    
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="social-monitoring" checked>
+                                        <div class="checkbox-custom"></div>
+                                        Social Media Monitoring
+                                    </label>
+                                    
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="real-time-check">
+                                        <div class="checkbox-custom"></div>
+                                        Real-time Cross-checking
+                                    </label>
+                                    
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="bias-detection" checked>
+                                        <div class="checkbox-custom"></div>
+                                        Bias Detection
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="form-actions-main">
+                            <button class="btn btn--primary btn--lg verify-btn" id="verify-btn">
+                                <span class="btn-text">🔍 Verify Claim</span>
+                                <div class="btn-spinner hidden">
+                                    <div class="spinner"></div>
+                                </div>
+                            </button>
+                            <button class="btn btn--outline btn--lg" id="save-draft-btn">
+                                <span class="btn-icon">💾</span>
+                                Save Draft
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Results Section -->
+                    <section class="results-section hidden" id="results-section">
+                        <div class="results-header">
+                            <h2>Verification Results</h2>
+                            <div class="result-actions">
+                                <span class="processing-time" id="processing-time">Processed in 2.3s</span>
+                                <button class="btn btn--outline btn--sm" id="share-results">
+                                    <span class="btn-icon">📤</span>
+                                    Share
+                                </button>
+                                <button class="btn btn--outline btn--sm" id="export-results">
+                                    <span class="btn-icon">📥</span>
+                                    Export
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="results-grid">
+                            <!-- Verdict Card -->
+                            <div class="card verdict-card">
+                                <div class="card__body">
+                                    <div class="verdict-badge" id="verdict-badge">ANALYZING...</div>
+                                    
+                                    <div class="confidence-section">
+                                        <label class="confidence-label">Confidence Score</label>
+                                        <div class="confidence-bar">
+                                            <div class="confidence-fill" id="confidence-fill" style="width: 0%"></div>
+                                            <span class="confidence-text" id="confidence-text">0%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="risk-indicators">
+                                        <div class="risk-item">
+                                            <span class="risk-label">Viral Potential</span>
+                                            <div class="risk-meter" id="viral-risk"></div>
+                                        </div>
+                                        <div class="risk-item">
+                                            <span class="risk-label">Harm Level</span>
+                                            <div class="risk-meter" id="harm-risk"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Explanation Card -->
+                            <div class="card explanation-card">
+                                <div class="card__body">
+                                    <h3>📝 Analysis Explanation</h3>
+                                    <p id="explanation-text">Detailed explanation will appear here...</p>
+                                    
+                                    <div class="gemini-comparison hidden" id="gemini-comparison">
+                                        <h4>🤖 AI Analysis</h4>
+                                        <p id="gemini-text"></p>
+                                    </div>
+
+                                    <div class="intervention-alerts" id="intervention-section">
+                                        <h4>⚠️ Recommended Actions</h4>
+                                        <div class="intervention-list" id="intervention-list"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Evidence Section -->
+                        <div class="evidence-section" id="evidence-section">
+                            <div class="evidence-header">
+                                <h2>📚 Evidence Analysis</h2>
+                                <div class="evidence-meta">
+                                    <span class="evidence-count" id="evidence-count">0 sources found</span>
+                                    <div class="evidence-filters">
+                                        <button class="filter-btn active" data-filter="all">All</button>
+                                        <button class="filter-btn" data-filter="supporting">Supporting</button>
+                                        <button class="filter-btn" data-filter="contradicting">Contradicting</button>
+                                        <button class="filter-btn" data-filter="neutral">Neutral</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="evidence-grid" id="evidence-grid">
+                                <!-- Evidence cards will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <!-- Dashboard Tab -->
+            <section class="tab-content" id="dashboard-tab">
+                <div class="dashboard-container">
+                    <div class="dashboard-header">
+                        <h1>📊 Crisis Monitoring Dashboard</h1>
+                        <div class="dashboard-controls">
+                            <button class="btn btn--primary" id="start-monitoring">
+                                <span class="btn-icon">▶️</span>
+                                Start Monitoring
+                            </button>
+                            <button class="btn btn--outline" id="stop-monitoring" disabled>
+                                <span class="btn-icon">⏹️</span>
+                                Stop
+                            </button>
+                            <select class="form-control" id="crisis-filter">
+                                <option value="all">All Crises</option>
+                                <option value="ukraine_war">Ukraine Conflict</option>
+                                <option value="covid_pandemic">COVID-19</option>
+                                <option value="climate_crisis">Climate Change</option>
+                                <option value="election_2024">Election 2024</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">🚨</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="active-alerts">0</div>
+                                <div class="stat-label">Active Alerts</div>
+                            </div>
+                            <div class="stat-trend up">↗ +12%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📈</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="trend-mentions">0</div>
+                                <div class="stat-label">Mentions/Hour</div>
+                            </div>
+                            <div class="stat-trend up">↗ +5%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔍</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="facts-checked">0</div>
+                                <div class="stat-label">Facts Checked</div>
+                            </div>
+                            <div class="stat-trend down">↘ -2%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⚡</div>
+                            <div class="stat-info">
+                                <div class="stat-number" id="detection-speed">1.3s</div>
+                                <div class="stat-label">Avg Speed</div>
+                            </div>
+                            <div class="stat-trend stable">→ 0%</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-grid">
+                        <!-- Active Alerts -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>🚨 Active Crisis Alerts</h3>
+                                <button class="btn btn--sm btn--outline refresh-btn">🔄 Refresh</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="alert-list" id="alerts-container">
+                                    <div class="no-data">
+                                        <div class="no-data-icon">🔍</div>
+                                        <p>No active alerts</p>
+                                        <small>System monitoring for suspicious patterns</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trending Topics -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>📊 Trending Misinformation</h3>
+                                <select class="form-control" id="trend-timeframe">
+                                    <option value="1h">Last Hour</option>
+                                    <option value="6h">Last 6 Hours</option>
+                                    <option value="24h" selected>Last 24 Hours</option>
+                                    <option value="7d">Last 7 Days</option>
+                                </select>
+                            </div>
+                            <div class="card-content">
+                                <div class="trend-list" id="trends-container">
+                                    <div class="no-data">
+                                        <div class="no-data-icon">📈</div>
+                                        <p>No trending topics</p>
+                                        <small>Start monitoring to see trends</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Chart -->
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h3>📈 Real-time Misinformation Flow</h3>
+                                <div class="chart-controls">
+                                    <button class="chart-btn active" data-metric="mentions">Mentions</button>
+                                    <button class="chart-btn" data-metric="sentiment">Sentiment</button>
+                                    <button class="chart-btn" data-metric="credibility">Credibility</button>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <canvas id="realtime-chart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- System Health -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>💚 System Health</h3>
+                                <div class="health-score" id="health-score">98%</div>
+                            </div>
+                            <div class="card-content">
+                                <div class="health-metrics">
+                                    <div class="metric-row">
+                                        <span>API Response</span>
+                                        <span class="metric-value good">Fast</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Data Sources</span>
+                                        <span class="metric-value good">6/6 Online</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>AI Models</span>
+                                        <span class="metric-value good">Optimal</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span>Cache Hit Rate</span>
+                                        <span class="metric-value good">87%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Activity Feed -->
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h3>📋 Live Activity Feed</h3>
+                                <button class="btn btn--sm btn--outline" id="pause-feed">⏸️ Pause</button>
+                            </div>
+                            <div class="card-content">
+                                <div class="activity-feed" id="activity-feed">
+                                    <!-- Activity items will be added dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Tab -->
+            <section class="tab-content" id="analytics-tab">
+                <div class="analytics-container">
+                    <div class="analytics-header">
+                        <h1>📈 Advanced Analytics</h1>
+                        <div class="date-range-picker">
+                            <input type="date" id="start-date" class="form-control">
+                            <span>to</span>
+                            <input type="date" id="end-date" class="form-control">
+                            <button class="btn btn--primary">Apply</button>
+                        </div>
+                    </div>
+
+                    <div class="analytics-grid">
+                        <div class="analytics-card full-width">
+                            <h3>🎯 Misinformation Detection Accuracy</h3>
+                            <canvas id="accuracy-chart"></canvas>
+                        </div>
+
+                        <div class="analytics-card">
+                            <h3>🌍 Geographic Distribution</h3>
+                            <div class="geo-map" id="geo-map">
+                                <!-- Interactive world map placeholder -->
+                                <div class="map-placeholder">Interactive Map Loading...</div>
+                            </div>
+                        </div>
+
+                        <div class="analytics-card">
+                            <h3>📊 Source Reliability</h3>
+                            <canvas id="sources-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Tab -->
+            <section class="tab-content" id="settings-tab">
+                <div class="settings-container">
+                    <div class="settings-header">
+                        <h1>⚙️ System Settings</h1>
+                    </div>
+
+                    <div class="settings-sections">
+                        <div class="settings-section">
+                            <h3>🔔 Alert Preferences</h3>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="email-alerts" checked>
+                                    <div class="checkbox-custom"></div>
+                                    Email Notifications
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="push-notifications">
+                                    <div class="checkbox-custom"></div>
+                                    Push Notifications
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>🎨 Appearance</h3>
+                            <div class="setting-item">
+                                <label class="form-label">Theme</label>
+                                <select class="form-control" id="theme-select">
+                                    <option value="auto">Auto (System)</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="settings-section">
+                            <h3>🔒 Privacy & Security</h3>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="anonymous-mode">
+                                    <div class="checkbox-custom"></div>
+                                    Anonymous Mode
+                                </label>
+                            </div>
+                            <div class="setting-item">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="data-retention" checked>
+                                    <div class="checkbox-custom"></div>
+                                    Data Retention (30 days)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div class="loading-overlay hidden" id="loading-overlay">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3>Analyzing Claim</h3>
+                <p>Cross-referencing with multiple sources...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="loading-progress"></div>
+                    </div>
+                    <span class="progress-text" id="progress-text">0%</span>
+                </div>
             </div>
-          </div>
-        </section>
-
-        <!-- Evidence Section -->
-        <section class="evidence-section hidden" id="evidence-section">
-          <div class="evidence-header">
-            <h2>Supporting Evidence</h2>
-            <div class="evidence-count" id="evidence-count"></div>
-          </div>
-          <div class="evidence-grid" id="evidence-grid">
-            <!-- Evidence cards will be populated here -->
-          </div>
-        </section>
-
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <!-- <footer class="app-footer">
-      <div class="container">
-        <div class="footer-stats" id="footer-stats">
-          <span>Truth Verification System</span>
-          <span>Powered by Advanced AI</span>
         </div>
-      </div>
-    </footer> --> 
 
-  </div>
+        <!-- Emergency Alert Modal -->
+        <div class="modal-overlay hidden" id="emergency-modal">
+            <div class="modal-content emergency-modal">
+                <div class="modal-header">
+                    <h3>🚨 Emergency Alert System</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Report critical misinformation that could cause immediate harm:</p>
+                    <textarea class="form-control" placeholder="Describe the urgent misinformation..." rows="4"></textarea>
+                    <div class="emergency-actions">
+                        <button class="btn btn--primary btn--lg">🚨 Send Emergency Alert</button>
+                        <button class="btn btn--outline">📞 Contact Authorities</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <!-- Loading Overlay -->
-  <div class="loading-overlay hidden" id="loading-overlay">
-    <div class="loading-content">
-      <div class="loading-spinner"></div>
-      <h3>Analyzing Claim...</h3>
-      <p>Gathering evidence and cross-referencing sources</p>
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <p>&copy; 2025 CrisisGuard AI. Advanced Crisis Misinformation Detection System.</p>
+                        <div class="footer-stats">
+                            <span>Last updated: <span id="last-updated">Never</span></span>
+                            <span>•</span>
+                            <span>API Status: <span id="api-status" class="status-online">Online</span></span>
+                            <span>•</span>
+                            <span>Version: v2.1.0</span>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">API Documentation</a>
+                        <a href="#" class="footer-link">Support</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <!-- Scripts -->
+    <script src="app.js"></script>
 </body>
 </html>
