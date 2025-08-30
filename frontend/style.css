@@ -861,7 +861,7 @@ body {
   font-size: var(--font-size-xl);
 }
 
-.logo-icon {
+.logo-icon img {
   width: 32px;
   height: 32px;
   vertical-align: middle;
