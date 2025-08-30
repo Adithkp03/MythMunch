@@ -874,16 +874,6 @@ body {
   background-clip: text;
 }
 
-.beta-badge {
-  background: var(--color-accent);
-  color: var(--color-white);
-  padding: var(--space-2) var(--space-6);
-  border-radius: var(--radius-sm);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-tight);
-}
 
 .nav-tabs {
   display: flex;
@@ -917,14 +907,20 @@ body {
 .nav-controls {
   display: flex;
   align-items: center;
+  
   gap: var(--space-16);
 }
 
 .connection-status {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-4);
   font-size: var(--font-size-sm);
+}
+#connection-text {
+  display: flex;
+  align-items: first baseline;
 }
 
 .status-dot {
@@ -933,6 +929,10 @@ body {
   border-radius: var(--radius-full);
   background: var(--color-success);
   animation: pulse 2s infinite;
+}
+.status-text{
+  display: flex;
+  align-items: self-end;
 }
 
 .theme-toggle {
