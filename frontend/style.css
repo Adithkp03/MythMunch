@@ -862,8 +862,9 @@ body {
 }
 
 .logo-icon {
-  font-size: var(--font-size-2xl);
-  animation: pulse 2s infinite;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
 }
 
 .logo-text {
