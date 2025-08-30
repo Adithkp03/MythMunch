@@ -585,6 +585,8 @@ select.form-control {
   color: var(--color-error);
   border: 1px solid
     rgba(var(--color-error-rgb, 192, 21, 47), var(--status-border-opacity));
+    padding: 10px;
+    margin: 10px;
 }
 
 .status--warning {
@@ -1108,7 +1110,17 @@ body {
 .input-container {
   position: relative;
   margin-bottom: var(--space-24);
+  
 }
+.input-container #claim-input{
+  
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-24);
+  overflow: hidden;
+}
+
 
 .claim-textarea {
   width: 100%;
@@ -2013,6 +2025,8 @@ body {
   background-color: rgba(var(--color-error-rgb), var(--status-bg-opacity));
   color: var(--color-error);
   border: 1px solid rgba(var(--color-error-rgb), var(--status-border-opacity));
+  margin: 10px;
+  padding: 10px;
 }
 
 .status--warning {
@@ -2020,7 +2034,14 @@ body {
   color: var(--color-warning);
   border: 1px solid rgba(var(--color-warning-rgb), var(--status-border-opacity));
 }
-
+.notification-close{
+  display: flex;
+  justify-content: start;
+}
+.notification-content{
+  margin: 10px;
+  padding: 10px;
+}
 .status--info {
   background-color: rgba(var(--color-info-rgb), var(--status-bg-opacity));
   color: var(--color-info);

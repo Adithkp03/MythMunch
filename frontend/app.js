@@ -1738,6 +1738,8 @@ const notificationStyles = `
 
   .notification-error {
     border-left: 4px solid var(--color-danger);
+    display: flex;
+    justify-content: space-around;
   }
 
   .notification-success {
