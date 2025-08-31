@@ -1,5 +1,5 @@
 /**
- * CrisisGuard AI - Clean Professional Version
+ * MythMunch AI - Clean Professional Version
  * Enhanced Truth Verification System (No Emojis)
  * Version: 2.1.1
  */
@@ -74,7 +74,7 @@ class CrisisGuardApp {
    * Initialize the application
    */
   async init() {
-    console.log('Initializing CrisisGuard AI...');
+    console.log('Initializing MythMunch AI...');
     
     try {
       await this.setupEventListeners();
@@ -83,7 +83,7 @@ class CrisisGuardApp {
       await this.startPeriodicUpdates();
       await this.checkSystemHealth();
       
-      console.log('CrisisGuard AI initialized successfully');
+      console.log('MythMunch AI initialized successfully');
       this.addActivityFeedItem('system', 'System initialized successfully');
     } catch (error) {
       console.error('Failed to initialize:', error);
@@ -1251,7 +1251,7 @@ class CrisisGuardApp {
       
       if (navigator.share) {
         await navigator.share({
-          title: 'CrisisGuard AI - Fact Check Results',
+          title: 'Myth Munch AI - Fact Check Results',
           text: `Claim verification: ${resultsData.verdict}`,
           url: window.location.href
         });
@@ -1325,7 +1325,7 @@ class CrisisGuardApp {
    */
   generateShareText(data) {
     return `
-CrisisGuard AI - Fact Check Results
+Myth Munch AI - Fact Check Results
 
 Claim: ${data.claim}
 Verdict: ${data.verdict}
