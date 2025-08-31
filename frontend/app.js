@@ -1,7 +1,7 @@
 /**
- * CrisisGuard AI - Enhanced Truth Verification System
- * Professional Hackathon-Winning Application
- * Version: 2.1.0
+ * CrisisGuard AI - Clean Professional Version
+ * Enhanced Truth Verification System (No Emojis)
+ * Version: 2.1.1
  */
 
 class CrisisGuardApp {
@@ -57,6 +57,16 @@ class CrisisGuardApp {
       'election-fraud': 'The 2024 election results were manipulated by voting machines'
     };
 
+    this.activityIcons = {
+      'system': 'settings',
+      'analysis': 'search',
+      'monitoring': 'activity',
+      'input': 'edit-3',
+      'navigation': 'compass',
+      'error': 'x-circle',
+      'emergency': 'alert-triangle'
+    };
+
     this.init();
   }
 
@@ -64,7 +74,7 @@ class CrisisGuardApp {
    * Initialize the application
    */
   async init() {
-    console.log('🚀 Initializing CrisisGuard AI...');
+    console.log('Initializing CrisisGuard AI...');
     
     try {
       await this.setupEventListeners();
@@ -73,10 +83,10 @@ class CrisisGuardApp {
       await this.startPeriodicUpdates();
       await this.checkSystemHealth();
       
-      console.log('✅ CrisisGuard AI initialized successfully');
+      console.log('CrisisGuard AI initialized successfully');
       this.addActivityFeedItem('system', 'System initialized successfully');
     } catch (error) {
-      console.error('❌ Failed to initialize:', error);
+      console.error('Failed to initialize:', error);
       this.showErrorNotification('Failed to initialize system');
     }
   }
@@ -370,7 +380,7 @@ class CrisisGuardApp {
         });
       }
 
-      console.log('📊 Charts initialized successfully');
+      console.log('Charts initialized successfully');
     } catch (error) {
       console.error('Failed to initialize charts:', error);
     }
@@ -398,7 +408,7 @@ class CrisisGuardApp {
         this.applySettings(settings);
       }
 
-      console.log('⚙️ Settings loaded successfully');
+      console.log('Settings loaded successfully');
     } catch (error) {
       console.error('Failed to load settings:', error);
     }
@@ -429,7 +439,7 @@ class CrisisGuardApp {
       this.checkConnectionStatus();
     }, 5000);
 
-    console.log('⏱️ Periodic updates started');
+    console.log('Periodic updates started');
   }
 
   /**
@@ -497,7 +507,30 @@ class CrisisGuardApp {
   updateThemeToggle(theme) {
     const toggle = document.getElementById('themeToggle');
     if (toggle) {
-      toggle.textContent = theme === 'dark' ? '🌞' : '🌙';
+      const svg = toggle.querySelector('svg path');
+      if (theme === 'dark') {
+        // Sun icon for light mode activation
+        toggle.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <line x1="12" y1="1" x2="12" y2="3"/>
+            <line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/>
+            <line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+        `;
+      } else {
+        // Moon icon for dark mode activation
+        toggle.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        `;
+      }
     }
   }
 
@@ -544,8 +577,14 @@ class CrisisGuardApp {
     recognition.lang = 'en-US';
 
     const voiceBtn = document.getElementById('voice-input-btn');
-    const originalText = voiceBtn.innerHTML;
-    voiceBtn.innerHTML = '<span class="btn-icon">🎤</span>Listening...';
+    const originalHTML = voiceBtn.innerHTML;
+    voiceBtn.innerHTML = `
+      <svg class="btn-icon animate-pulse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/>
+        <circle cx="12" cy="8" r="2"/>
+      </svg>
+      Listening...
+    `;
     voiceBtn.disabled = true;
 
     recognition.onresult = (event) => {
@@ -564,7 +603,7 @@ class CrisisGuardApp {
     };
 
     recognition.onend = () => {
-      voiceBtn.innerHTML = originalText;
+      voiceBtn.innerHTML = originalHTML;
       voiceBtn.disabled = false;
     };
 
@@ -655,9 +694,31 @@ class CrisisGuardApp {
       if (score > 0) sentiment = 'positive';
       else if (score < 0) sentiment = 'negative';
       
-      const sentimentIcon = document.querySelector('.sentiment-icon');
+      // Update button based on sentiment
+      const sentimentIcon = sentimentBtn.querySelector('svg');
       if (sentimentIcon) {
-        sentimentIcon.textContent = sentiment === 'positive' ? '😊' : sentiment === 'negative' ? '😟' : '😐';
+        if (sentiment === 'positive') {
+          sentimentIcon.innerHTML = `
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          `;
+        } else if (sentiment === 'negative') {
+          sentimentIcon.innerHTML = `
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m16 16s-1.5-2-4-2-4 2-4 2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          `;
+        } else {
+          sentimentIcon.innerHTML = `
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="8" y1="15" x2="16" y2="15"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          `;
+        }
       }
       
       this.addActivityFeedItem('analysis', `Sentiment analyzed: ${sentiment}`);
@@ -682,7 +743,11 @@ class CrisisGuardApp {
       
       const arrow = toggle.querySelector('.settings-arrow');
       if (arrow) {
-        arrow.textContent = isExpanded ? '▶' : '▼';
+        if (isExpanded) {
+          arrow.style.transform = 'rotate(-90deg)';
+        } else {
+          arrow.style.transform = 'rotate(0deg)';
+        }
       }
     }
   }
@@ -806,7 +871,7 @@ class CrisisGuardApp {
 
       const finalOptions = { ...defaultOptions, ...options };
       
-      console.log(`🌐 API Call: ${finalOptions.method} ${url}`);
+      console.log(`API Call: ${finalOptions.method} ${url}`);
       
       const response = await fetch(url, finalOptions);
       
@@ -816,11 +881,11 @@ class CrisisGuardApp {
       }
 
       const result = await response.json();
-      console.log(`✅ API Response: ${endpoint}`, result);
+      console.log(`API Response: ${endpoint}`, result);
       
       return result;
     } catch (error) {
-      console.error(`❌ API Error: ${endpoint}`, error);
+      console.error(`API Error: ${endpoint}`, error);
       throw error;
     }
   }
@@ -1019,7 +1084,12 @@ class CrisisGuardApp {
       </div>
       ${evidence.url ? `
         <a href="${evidence.url}" target="_blank" class="evidence-url" rel="noopener noreferrer">
-          View Source →
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+            <polyline points="15,3 21,3 21,9"/>
+            <line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+          View Source
         </a>
       ` : ''}
     `;
@@ -1207,7 +1277,7 @@ class CrisisGuardApp {
       const resultsData = this.getResultsData();
       const exportData = {
         timestamp: new Date().toISOString(),
-        version: '2.1.0',
+        version: '2.1.1',
         ...resultsData
       };
 
@@ -1398,7 +1468,10 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
     if (!this.state.alertsData || this.state.alertsData.length === 0) {
       container.innerHTML = `
         <div class="no-data">
-          <div class="no-data-icon">🔍</div>
+          <svg class="no-data-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+          </svg>
           <p>No active alerts</p>
           <small>System monitoring for suspicious patterns</small>
         </div>
@@ -1435,7 +1508,9 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
     if (!this.state.trendsData || this.state.trendsData.length === 0) {
       container.innerHTML = `
         <div class="no-data">
-          <div class="no-data-icon">📈</div>
+          <svg class="no-data-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+          </svg>
           <p>No trending topics</p>
           <small>Start monitoring to see trends</small>
         </div>
@@ -1460,7 +1535,13 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
               <div class="trend-fill" style="width: ${percentage}%"></div>
             </div>
             <span class="trend-change ${change >= 0 ? 'positive' : 'negative'}">
-              ${change >= 0 ? '↗' : '↘'} ${Math.abs(change).toFixed(1)}%
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                ${change >= 0 ? 
+                  '<polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/>' : 
+                  '<polyline points="1,6 8.5,13.5 13.5,8.5 23,18"/>'
+                }
+              </svg>
+              ${Math.abs(change).toFixed(1)}%
             </span>
           </div>
         </div>
@@ -1576,25 +1657,35 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
     const feed = document.getElementById('activity-feed');
     if (!feed) return;
 
-    const iconMap = {
-      'system': '⚙️',
-      'analysis': '🔍',
-      'monitoring': '📊',
-      'input': '📝',
-      'navigation': '🧭',
-      'error': '❌',
-      'emergency': '🚨'
-    };
-
     feed.innerHTML = this.state.activityFeed.slice(0, 20).map(item => `
       <div class="activity-item">
-        <div class="activity-icon">${iconMap[item.type] || '📋'}</div>
+        <div class="activity-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            ${this.getActivityIconSVG(item.type)}
+          </svg>
+        </div>
         <div class="activity-content">
           <div class="activity-message">${item.message}</div>
           <div class="activity-time">${this.formatTime(item.timestamp)}</div>
         </div>
       </div>
     `).join('');
+  }
+
+  /**
+   * Get activity icon SVG
+   */
+  getActivityIconSVG(type) {
+    const icons = {
+      'system': '<circle cx="12" cy="12" r="3"/><path d="m12 1 2.09 3.26L18 6l-3.69 2.39L15 13l-3-2-3 2 .69-4.61L6 6l3.91-1.74L12 1z"/>',
+      'analysis': '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>',
+      'monitoring': '<polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>',
+      'input': '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>',
+      'navigation': '<circle cx="12" cy="12" r="10"/><polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88"/>',
+      'error': '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+      'emergency': '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
+    };
+    return icons[type] || icons['system'];
   }
 
   /**
@@ -1664,14 +1755,26 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
     // Create notification element
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
+    
+    const iconSVG = {
+      'error': '<circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>',
+      'success': '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/>',
+      'info': '<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>'
+    };
+
     notification.innerHTML = `
       <div class="notification-content">
-        <span class="notification-icon">
-          ${type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️'}
-        </span>
+        <svg class="notification-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          ${iconSVG[type] || iconSVG['info']}
+        </svg>
         <span class="notification-message">${message}</span>
       </div>
-      <button class="notification-close">&times;</button>
+      <button class="notification-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
     `;
 
     // Add to page
@@ -1738,8 +1841,6 @@ const notificationStyles = `
 
   .notification-error {
     border-left: 4px solid var(--color-danger);
-    display: flex;
-    justify-content: space-around;
   }
 
   .notification-success {
@@ -1757,6 +1858,10 @@ const notificationStyles = `
     flex: 1;
   }
 
+  .notification-icon {
+    flex-shrink: 0;
+  }
+
   .notification-message {
     font-size: 0.875rem;
     color: var(--color-text-primary);
@@ -1767,13 +1872,11 @@ const notificationStyles = `
     border: none;
     color: var(--color-text-secondary);
     cursor: pointer;
-    font-size: 1.2rem;
     padding: 0;
-    width: 20px;
-    height: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   .notification-close:hover {
@@ -1788,6 +1891,19 @@ const notificationStyles = `
     to {
       transform: translateX(0);
       opacity: 1;
+    }
+  }
+
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: .5;
     }
   }
 `;

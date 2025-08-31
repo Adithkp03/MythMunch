@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crisis Misinformation Detection System | AI-Powered Truth Verification</title>
+    <title>CrisisGuard AI | Crisis Misinformation Detection System</title>
     <meta name="description" content="Advanced AI-powered crisis misinformation detection with real-time monitoring and multi-source evidence analysis">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="../Images/favicon-32x32.png">
-    <link rel="icon" href="../Images/favicon.ico" type="image/x-icon" >
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'><path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/></svg>">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 </head>
 <body>
     <div class="app-container">
@@ -16,26 +17,41 @@
         <header class="nav-header">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <span class="logo-icon"><img src="../Images/logopng.png" alt=""></span>
-                    <span class="logo-text">Myth Munch AI</span>
-                    
+                    <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    <span class="logo-text">CrisisGuard AI</span>
+                    <span class="beta-badge">BETA</span>
                 </div>
                 
                 <nav class="nav-tabs">
                     <button class="nav-tab active" data-tab="fact-check">
-                        <span class="tab-icon">🔍</span>
+                        <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
                         Fact Check
                     </button>
                     <button class="nav-tab" data-tab="dashboard">
-                        <span class="tab-icon">📊</span>
+                        <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                        </svg>
                         Live Dashboard
                     </button>
                     <button class="nav-tab" data-tab="analytics">
-                        <span class="tab-icon">📈</span>
+                        <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                        </svg>
                         Analytics
                     </button>
                     <button class="nav-tab" data-tab="settings">
-                        <span class="tab-icon">⚙️</span>
+                        <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="m12 1 2.09 3.26L18 6l-3.69 2.39L15 13l-3-2-3 2 .69-4.61L6 6l3.91-1.74L12 1z"/>
+                        </svg>
                         Settings
                     </button>
                 </nav>
@@ -45,9 +61,17 @@
                         <div class="status-dot" id="connection-status"></div>
                         <span class="status-text" id="connection-text">Connected</span>
                     </div>
-                    <button id="themeToggle" class="theme-toggle" title="Toggle theme">🌙</button>
+                    <button id="themeToggle" class="theme-toggle" title="Toggle theme">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
                     <button class="emergency-btn" id="emergency-alert">
-                        <span class="emergency-icon">🚨</span>
+                        <svg class="emergency-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
                         Emergency
                     </button>
                 </div>
@@ -85,19 +109,30 @@
                     <!-- Quick Actions -->
                     <div class="quick-actions">
                         <button class="quick-action-btn" data-example="covid-vaccine">
-                            <span class="action-icon">💉</span>
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="m22 21-3-3"/>
+                            </svg>
                             <span class="action-text">COVID Vaccine Claims</span>
                         </button>
                         <button class="quick-action-btn" data-example="ukraine-war">
-                            <span class="action-icon">🇺🇦</span>
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
                             <span class="action-text">Ukraine Conflict</span>
                         </button>
                         <button class="quick-action-btn" data-example="climate-change">
-                            <span class="action-icon">🌍</span>
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
                             <span class="action-text">Climate Change</span>
                         </button>
                         <button class="quick-action-btn" data-example="election-fraud">
-                            <span class="action-icon">🗳️</span>
+                            <svg class="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>
+                            </svg>
                             <span class="action-text">Election Fraud</span>
                         </button>
                     </div>
@@ -108,11 +143,17 @@
                             <h2>Enter Claim to Verify</h2>
                             <div class="form-actions">
                                 <button class="btn btn--outline" id="voice-input-btn">
-                                    <span class="btn-icon">🎤</span>
+                                    <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/>
+                                        <circle cx="12" cy="8" r="2"/>
+                                    </svg>
                                     Voice Input
                                 </button>
                                 <button class="btn btn--outline" id="paste-btn">
-                                    <span class="btn-icon">📋</span>
+                                    <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
                                     Paste
                                 </button>
                             </div>
@@ -133,7 +174,10 @@
                                 <div class="input-actions">
                                     <button class="action-btn" id="clear-btn">Clear</button>
                                     <button class="action-btn" id="analyze-sentiment">
-                                        <span class="sentiment-icon">😐</span>
+                                        <svg class="sentiment-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <circle cx="12" cy="12" r="10"/>
+                                            <path d="m9 12 2 2 4-4"/>
+                                        </svg>
                                         Analyze Tone
                                     </button>
                                 </div>
@@ -146,8 +190,16 @@
                         <!-- Advanced Settings -->
                         <div class="settings-panel card">
                             <div class="settings-header" id="settings-toggle">
-                                <h3>🔧 Advanced Settings</h3>
-                                <span class="settings-arrow">▼</span>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="3"/>
+                                        <path d="m12 1 2.09 3.26L18 6l-3.69 2.39L15 13l-3-2-3 2 .69-4.61L6 6l3.91-1.74L12 1z"/>
+                                    </svg>
+                                    Advanced Settings
+                                </h3>
+                                <svg class="settings-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6,9 12,15 18,9"/>
+                                </svg>
                             </div>
                             <div class="settings-content expanded" id="settings-content">
                                 <div class="settings-grid">
@@ -205,13 +257,23 @@
                         <!-- Action Buttons -->
                         <div class="form-actions-main">
                             <button class="btn btn--primary btn--lg verify-btn" id="verify-btn">
-                                <span class="btn-text">🔍 Verify Claim</span>
+                                <span class="btn-text">
+                                    <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="11" cy="11" r="8"/>
+                                        <path d="m21 21-4.35-4.35"/>
+                                    </svg>
+                                    Verify Claim
+                                </span>
                                 <div class="btn-spinner hidden">
                                     <div class="spinner"></div>
                                 </div>
                             </button>
                             <button class="btn btn--outline btn--lg" id="save-draft-btn">
-                                <span class="btn-icon">💾</span>
+                                <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                                    <polyline points="17,21 17,13 7,13 7,21"/>
+                                    <polyline points="7,3 7,8 15,8"/>
+                                </svg>
                                 Save Draft
                             </button>
                         </div>
@@ -224,11 +286,19 @@
                             <div class="result-actions">
                                 <span class="processing-time" id="processing-time">Processed in 2.3s</span>
                                 <button class="btn btn--outline btn--sm" id="share-results">
-                                    <span class="btn-icon">📤</span>
+                                    <svg class="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                                        <polyline points="16,6 12,2 8,6"/>
+                                        <line x1="12" y1="2" x2="12" y2="15"/>
+                                    </svg>
                                     Share
                                 </button>
                                 <button class="btn btn--outline btn--sm" id="export-results">
-                                    <span class="btn-icon">📥</span>
+                                    <svg class="btn-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7,10 12,15 17,10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
                                     Export
                                 </button>
                             </div>
@@ -264,16 +334,39 @@
                             <!-- Explanation Card -->
                             <div class="card explanation-card">
                                 <div class="card__body">
-                                    <h3>📝 Analysis Explanation</h3>
+                                    <h3>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                            <polyline points="14,2 14,8 20,8"/>
+                                            <line x1="16" y1="13" x2="8" y2="13"/>
+                                            <line x1="16" y1="17" x2="8" y2="17"/>
+                                            <polyline points="10,9 9,9 8,9"/>
+                                        </svg>
+                                        Analysis Explanation
+                                    </h3>
                                     <p id="explanation-text">Detailed explanation will appear here...</p>
                                     
                                     <div class="gemini-comparison hidden" id="gemini-comparison">
-                                        <h4>🤖 AI Analysis</h4>
+                                        <h4>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                                <rect x="9" y="9" width="6" height="6"/>
+                                                <path d="m9 1 3 8 8 3-8 3-3 8-3-8-8-3 8-3 3-8z"/>
+                                            </svg>
+                                            AI Analysis
+                                        </h4>
                                         <p id="gemini-text"></p>
                                     </div>
 
                                     <div class="intervention-alerts" id="intervention-section">
-                                        <h4>⚠️ Recommended Actions</h4>
+                                        <h4>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                            </svg>
+                                            Recommended Actions
+                                        </h4>
                                         <div class="intervention-list" id="intervention-list"></div>
                                     </div>
                                 </div>
@@ -283,7 +376,13 @@
                         <!-- Evidence Section -->
                         <div class="evidence-section" id="evidence-section">
                             <div class="evidence-header">
-                                <h2>📚 Evidence Analysis</h2>
+                                <h2>
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                    </svg>
+                                    Evidence Analysis
+                                </h2>
                                 <div class="evidence-meta">
                                     <span class="evidence-count" id="evidence-count">0 sources found</span>
                                     <div class="evidence-filters">
@@ -306,14 +405,24 @@
             <section class="tab-content" id="dashboard-tab">
                 <div class="dashboard-container">
                     <div class="dashboard-header">
-                        <h1>📊 Crisis Monitoring Dashboard</h1>
+                        <h1>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                            </svg>
+                            Crisis Monitoring Dashboard
+                        </h1>
                         <div class="dashboard-controls">
                             <button class="btn btn--primary" id="start-monitoring">
-                                <span class="btn-icon">▶️</span>
+                                <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="5,3 19,12 5,21"/>
+                                </svg>
                                 Start Monitoring
                             </button>
                             <button class="btn btn--outline" id="stop-monitoring" disabled>
-                                <span class="btn-icon">⏹️</span>
+                                <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="6" y="6" width="12" height="12"/>
+                                </svg>
                                 Stop
                             </button>
                             <select class="form-control" id="crisis-filter">
@@ -328,36 +437,55 @@
 
                     <div class="dashboard-stats">
                         <div class="stat-card">
-                            <div class="stat-icon">🚨</div>
+                            <div class="stat-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                    <line x1="12" y1="9" x2="12" y2="13"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
+                            </div>
                             <div class="stat-info">
                                 <div class="stat-number" id="active-alerts">0</div>
                                 <div class="stat-label">Active Alerts</div>
                             </div>
-                            <div class="stat-trend up">↗ +12%</div>
+                            <div class="stat-trend up">+12%</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon">📈</div>
+                            <div class="stat-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                </svg>
+                            </div>
                             <div class="stat-info">
                                 <div class="stat-number" id="trend-mentions">0</div>
                                 <div class="stat-label">Mentions/Hour</div>
                             </div>
-                            <div class="stat-trend up">↗ +5%</div>
+                            <div class="stat-trend up">+5%</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon">🔍</div>
+                            <div class="stat-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.35-4.35"/>
+                                </svg>
+                            </div>
                             <div class="stat-info">
                                 <div class="stat-number" id="facts-checked">0</div>
                                 <div class="stat-label">Facts Checked</div>
                             </div>
-                            <div class="stat-trend down">↘ -2%</div>
+                            <div class="stat-trend down">-2%</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon">⚡</div>
+                            <div class="stat-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13,2 3,14 12,14 11,22 21,10 12,10"/>
+                                </svg>
+                            </div>
                             <div class="stat-info">
                                 <div class="stat-number" id="detection-speed">1.3s</div>
                                 <div class="stat-label">Avg Speed</div>
                             </div>
-                            <div class="stat-trend stable">→ 0%</div>
+                            <div class="stat-trend stable">0%</div>
                         </div>
                     </div>
 
@@ -365,13 +493,30 @@
                         <!-- Active Alerts -->
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <h3>🚨 Active Crisis Alerts</h3>
-                                <button class="btn btn--sm btn--outline refresh-btn">🔄 Refresh</button>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                    Active Crisis Alerts
+                                </h3>
+                                <button class="btn btn--sm btn--outline refresh-btn">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="23,4 23,10 17,10"/>
+                                        <polyline points="1,20 1,14 7,14"/>
+                                        <path d="m3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                                    </svg>
+                                    Refresh
+                                </button>
                             </div>
                             <div class="card-content">
                                 <div class="alert-list" id="alerts-container">
                                     <div class="no-data">
-                                        <div class="no-data-icon">🔍</div>
+                                        <svg class="no-data-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                            <circle cx="11" cy="11" r="8"/>
+                                            <path d="m21 21-4.35-4.35"/>
+                                        </svg>
                                         <p>No active alerts</p>
                                         <small>System monitoring for suspicious patterns</small>
                                     </div>
@@ -382,7 +527,12 @@
                         <!-- Trending Topics -->
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <h3>📊 Trending Misinformation</h3>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                    </svg>
+                                    Trending Misinformation
+                                </h3>
                                 <select class="form-control" id="trend-timeframe">
                                     <option value="1h">Last Hour</option>
                                     <option value="6h">Last 6 Hours</option>
@@ -393,7 +543,9 @@
                             <div class="card-content">
                                 <div class="trend-list" id="trends-container">
                                     <div class="no-data">
-                                        <div class="no-data-icon">📈</div>
+                                        <svg class="no-data-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                                            <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                        </svg>
                                         <p>No trending topics</p>
                                         <small>Start monitoring to see trends</small>
                                     </div>
@@ -404,7 +556,12 @@
                         <!-- Real-time Chart -->
                         <div class="dashboard-card full-width">
                             <div class="card-header">
-                                <h3>📈 Real-time Misinformation Flow</h3>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                                    </svg>
+                                    Real-time Misinformation Flow
+                                </h3>
                                 <div class="chart-controls">
                                     <button class="chart-btn active" data-metric="mentions">Mentions</button>
                                     <button class="chart-btn" data-metric="sentiment">Sentiment</button>
@@ -419,7 +576,12 @@
                         <!-- System Health -->
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <h3>💚 System Health</h3>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                                    </svg>
+                                    System Health
+                                </h3>
                                 <div class="health-score" id="health-score">98%</div>
                             </div>
                             <div class="card-content">
@@ -447,8 +609,23 @@
                         <!-- Live Activity Feed -->
                         <div class="dashboard-card">
                             <div class="card-header">
-                                <h3>📋 Live Activity Feed</h3>
-                                <button class="btn btn--sm btn--outline" id="pause-feed">⏸️ Pause</button>
+                                <h3>
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                        <polyline points="14,2 14,8 20,8"/>
+                                        <line x1="16" y1="13" x2="8" y2="13"/>
+                                        <line x1="16" y1="17" x2="8" y2="17"/>
+                                        <polyline points="10,9 9,9 8,9"/>
+                                    </svg>
+                                    Live Activity Feed
+                                </h3>
+                                <button class="btn btn--sm btn--outline" id="pause-feed">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="6" y="4" width="4" height="16"/>
+                                        <rect x="14" y="4" width="4" height="16"/>
+                                    </svg>
+                                    Pause
+                                </button>
                             </div>
                             <div class="card-content">
                                 <div class="activity-feed" id="activity-feed">
@@ -464,7 +641,12 @@
             <section class="tab-content" id="analytics-tab">
                 <div class="analytics-container">
                     <div class="analytics-header">
-                        <h1>📈 Advanced Analytics</h1>
+                        <h1>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/>
+                            </svg>
+                            Advanced Analytics
+                        </h1>
                         <div class="date-range-picker">
                             <input type="date" id="start-date" class="form-control">
                             <span>to</span>
@@ -475,20 +657,37 @@
 
                     <div class="analytics-grid">
                         <div class="analytics-card full-width">
-                            <h3>🎯 Misinformation Detection Accuracy</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/>
+                                    <circle cx="12" cy="8" r="2"/>
+                                </svg>
+                                Misinformation Detection Accuracy
+                            </h3>
                             <canvas id="accuracy-chart"></canvas>
                         </div>
 
                         <div class="analytics-card">
-                            <h3>🌍 Geographic Distribution</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88"/>
+                                </svg>
+                                Geographic Distribution
+                            </h3>
                             <div class="geo-map" id="geo-map">
-                                <!-- Interactive world map placeholder -->
                                 <div class="map-placeholder">Interactive Map Loading...</div>
                             </div>
                         </div>
 
                         <div class="analytics-card">
-                            <h3>📊 Source Reliability</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                </svg>
+                                Source Reliability
+                            </h3>
                             <canvas id="sources-chart"></canvas>
                         </div>
                     </div>
@@ -499,12 +698,24 @@
             <section class="tab-content" id="settings-tab">
                 <div class="settings-container">
                     <div class="settings-header">
-                        <h1>⚙️ System Settings</h1>
+                        <h1>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="m12 1 2.09 3.26L18 6l-3.69 2.39L15 13l-3-2-3 2 .69-4.61L6 6l3.91-1.74L12 1z"/>
+                            </svg>
+                            System Settings
+                        </h1>
                     </div>
 
                     <div class="settings-sections">
                         <div class="settings-section">
-                            <h3>🔔 Alert Preferences</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/>
+                                    <path d="m13.73 21a2 2 0 0 1-3.46 0"/>
+                                </svg>
+                                Alert Preferences
+                            </h3>
                             <div class="setting-item">
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="email-alerts" checked>
@@ -522,7 +733,14 @@
                         </div>
 
                         <div class="settings-section">
-                            <h3>🎨 Appearance</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="3"/>
+                                    <path d="M12 1v6m0 6v6"/>
+                                    <path d="m21 12-6 0m-6 0-6 0"/>
+                                </svg>
+                                Appearance
+                            </h3>
                             <div class="setting-item">
                                 <label class="form-label">Theme</label>
                                 <select class="form-control" id="theme-select">
@@ -534,7 +752,14 @@
                         </div>
 
                         <div class="settings-section">
-                            <h3>🔒 Privacy & Security</h3>
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <circle cx="12" cy="16" r="1"/>
+                                    <path d="m7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                Privacy &amp; Security
+                            </h3>
                             <div class="setting-item">
                                 <label class="checkbox-label">
                                     <input type="checkbox" id="anonymous-mode">
@@ -574,15 +799,34 @@
         <div class="modal-overlay hidden" id="emergency-modal">
             <div class="modal-content emergency-modal">
                 <div class="modal-header">
-                    <h3>🚨 Emergency Alert System</h3>
+                    <h3>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                        Emergency Alert System
+                    </h3>
                     <button class="modal-close">&times;</button>
                 </div>
                 <div class="modal-body">
                     <p>Report critical misinformation that could cause immediate harm:</p>
                     <textarea class="form-control" placeholder="Describe the urgent misinformation..." rows="4"></textarea>
                     <div class="emergency-actions">
-                        <button class="btn btn--primary btn--lg">🚨 Send Emergency Alert</button>
-                        <button class="btn btn--outline">📞 Contact Authorities</button>
+                        <button class="btn btn--primary btn--lg">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                <line x1="12" y1="9" x2="12" y2="13"/>
+                                <line x1="12" y1="17" x2="12.01" y2="17"/>
+                            </svg>
+                            Send Emergency Alert
+                        </button>
+                        <button class="btn btn--outline">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            Contact Authorities
+                        </button>
                     </div>
                 </div>
             </div>
@@ -593,7 +837,7 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-info">
-                        <p>&copy; 2025 Myth Munch AI. Advanced Crisis Misinformation Detection System.</p>
+                        <p>&copy; 2025 CrisisGuard AI. Advanced Crisis Misinformation Detection System.</p>
                         <div class="footer-stats">
                             <span>Last updated: <span id="last-updated">Never</span></span>
                             <span>•</span>
@@ -614,6 +858,14 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        // Initialize Lucide icons after the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
+    </script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -879,9 +879,14 @@ body {
 
 .nav-tabs {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: var(--space-8);
 }
-
+.tab-icon img{
+  width: 20px;
+  height: 20px;
+}
 .nav-tab {
   display: flex;
   align-items: center;
