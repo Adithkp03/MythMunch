@@ -1124,7 +1124,7 @@ body {
 .input-container #claim-input{
   
   backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   border-radius: var(--radius-lg);
   margin-bottom: var(--space-24);
   overflow: hidden;
@@ -1352,7 +1352,7 @@ body {
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
   content: '✓';
   position: absolute;
-  top: 60%;
+  top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--color-white);
