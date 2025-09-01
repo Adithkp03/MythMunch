@@ -1178,6 +1178,9 @@ body {
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-standard);
   font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .action-btn:hover {
@@ -1329,13 +1332,18 @@ body {
 .checkbox-custom {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-card-border);
   border-radius: var(--radius-sm);
   position: relative;
   transition: all var(--duration-fast) var(--ease-standard);
   flex-shrink: 0;
+  
 }
-
+.checkbox-custom::after{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
   background: var(--color-primary);
   border-color: var(--color-primary);
@@ -1344,7 +1352,7 @@ body {
 .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
   content: '✓';
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: var(--color-white);
