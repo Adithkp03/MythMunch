@@ -1423,7 +1423,7 @@ Analyzed on ${new Date(data.timestamp).toLocaleString()}
       this.monitoringInterval = null;
     }
   }
-
+  
   /**
    * Update alerts
    */
@@ -1915,11 +1915,94 @@ if (!document.getElementById('notification-styles')) {
   style.textContent = notificationStyles;
   document.head.appendChild(style);
 }
+const infoContent = {
+  privacy: {
+    title: "Privacy Policy",
+    body: `<p>Myth Munch AI values your privacy. We collect, use, and protect information in accordance with applicable data protection laws.</p>
+           <ul>
+             <li><strong>Information Collected :</strong> We may collect data you input to verify claims, logs related to system usage, and technical details about your device and browser. Where possible, inputs are anonymized and stored securely.</li>
+             <li><strong>Use of Information :</strong> Data may be used to improve service accuracy, monitor system health, and generate aggregate statistics. Personal information is never sold or used for unrelated marketing.</li>
+             <li><strong>AI Data Handling :</strong> Inputs and outputs processed by our AI models may be stored temporarily for system improvement. No personally identifiable information is shared with third parties except as required by law.  </li>
+             <li><strong>User Rights :</strong> You may access, correct, or delete personal information stored about you by contacting support.  </li>
+             <li><strong>Security Measures :</strong> We use encryption, access controls, and regular audits to protect your data.  </li>
+             <li><strong>AI-Specific Disclaimers :</strong> AI systems may produce inaccurate or incomplete results. All AI outputs should be used as guidance, not as definitive fact.  </li>
+             <li><strong>Contact :</strong> For privacy questions or to exercise your rights, email adithkp03@gmail.com.  </li>
+           </ul>`
+  },
+  terms: {
+    title: "Terms of Service",
+    body: `<p>These Terms of Service govern your use of Myth Munch AI.</p>
+           <ul>
+             <li><strong>Service Description :</strong>  Myth Munch AI provides automated verification and evidence aggregation for public claims using AI technologies.</li>
+             <li><strong>Acceptable Use :</strong> Do not use the service to submit illegal, harmful, or copyrighted material, nor to automate credit, insurance, employment, or similarly critical decisions.</li>
+             <li><strong>AI Limitations :</strong> AI-generated outputs should be independently verified before acting on them. CrisisGuard AI is not liable for outcomes based on system analysis.</li>
+             <li><strong>Intellectual Property :</strong> Ownership of user-submitted content remains with you. Generated outputs may be used for improvement, analytics, and display within the system.</li>
+             <li><strong>Service availability :</strong> The service may be interrupted for maintenance or unforeseen reasons. Service is provided as-is with no uptime guarantees.</li>
+             <li><strong>Liability :</strong> CrisisGuard AI is not responsible for losses arising from use of the system, AI model errors, or third-party data sources.</li>
+             <li><strong>Changes :</strong> Terms may be updated periodically. Continued use indicates agreement with updated terms.</li>
+             <li><strong>Governing Law :</strong> These terms are subject to the laws of your local jurisdiction.</li>
+             <li><strong>Contact :</strong>For queries about these terms, contact adithkp03@gmail.com.</li>
+           </ul>`
+  },
+  api: {
+    title: "API Documentation",
+    body: `<p>Welcome to the Myth Munch AI API Docs.</p>
+           <ul>
+             <li><strong>/fact-check</strong> (POST): Submit claim for verification.</li>
+             <li><strong>/trends</strong> (GET): Get trending topics.</li>
+             <li><strong>API Key Required</strong> via Authorization header.</li>
+             <li>Sample Request/Response available via adithkp03@gmail.com.</li>
+           </ul>`
+  },
+  support: {
+    title: "Support",
+    body: `<p>Need help? Our support team is ready to assist you.</p>
+           <ul>
+             <li><strong>Help Center:</strong> Guides and troubleshooting tips.</li>
+             <li><strong>Email:</strong> support@crisisguard.ai</li>
+             <li><strong>Community:</strong> Forums and feedback portal.</li>
+           </ul>`
+  }
+};
 
-// Initialize the application when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  window.crisisGuardApp = new CrisisGuardApp();
+document.querySelectorAll('.footer-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const key = this.getAttribute('data-info');
+    document.getElementById('modal-title').textContent = infoContent[key].title;
+    document.getElementById('modal-body').innerHTML = infoContent[key].body;
+    document.getElementById('info-modal').classList.remove('hidden');
+  });
 });
+
+window.addEventListener('DOMContentLoaded', function() {
+  // Attach footer links
+  document.querySelectorAll('.footer-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const key = this.getAttribute('data-info');
+      document.getElementById('modal-title').textContent = infoContent[key].title;
+      document.getElementById('modal-body').innerHTML = infoContent[key].body;
+      document.getElementById('info-modal').classList.remove('hidden');
+    });
+  });
+
+  // Attach modal close button event using the new ID
+  const closeBtn = document.getElementById('modal-close-btn');
+  if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+      document.getElementById('info-modal').classList.add('hidden');
+    });
+  }
+
+  // ESC key closes modal
+  window.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") {
+      document.getElementById('info-modal').classList.add('hidden');
+    }
+  });
+});
+
 
 // Export for use in other scripts if needed
 if (typeof module !== 'undefined' && module.exports) {
