@@ -1,6 +1,5 @@
 /**
  * MythMunch AI - Clean Professional Version
- * Enhanced Truth Verification System (No Emojis)
  * Version: 2.1.1
  */
 
@@ -2008,3 +2007,6 @@ window.addEventListener('DOMContentLoaded', function() {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = CrisisGuardApp;
 }
+document.addEventListener('DOMContentLoaded', () => {
+  window.crisisGuardApp = new CrisisGuardApp();
+});
